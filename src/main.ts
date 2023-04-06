@@ -1,11 +1,16 @@
 import { createApp } from 'vue'
+import { createPinia } from 'pinia'
 import App from './App'
 import router from './router'
 import ViewUiPlus from 'view-ui-plus'
 import './styles/index.less'
 
+const pinia = createPinia()
 const app = createApp(App)
 
-app.use(router)
+app.use(pinia)
+    .use(router)
     .use(ViewUiPlus)
-    .mount('#app')
+
+router.isReady().then(() => app.mount('#app'))
+// app.mount('#app')

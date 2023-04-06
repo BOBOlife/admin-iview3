@@ -2,6 +2,8 @@ import { defineConfig, loadEnv } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import { createHtmlPlugin } from 'vite-plugin-html'
 import vueJsx from '@vitejs/plugin-vue-jsx'
+import AutoImport from 'unplugin-auto-import/vite'
+
 const autoprefixer = require('autoprefixer')
 const path = require('path')
 
@@ -22,6 +24,20 @@ const config = ({ mode }) => {
                         title: APP_TITLE,
                     },
                 }
+            }),
+            AutoImport({
+                include: [
+                    /\.[tj]sx?$/,
+                    /\.vue$/, /\.vue\?vue/,
+                    /\.md$/
+                ],
+                imports: [
+                    'vue',
+                    'vue-router',
+                    {
+                        '@vueuse/core': []
+                    }
+                ]
             })
         ],
         build: {
